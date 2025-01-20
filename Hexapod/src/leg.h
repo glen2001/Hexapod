@@ -1,16 +1,23 @@
-#ifndef LEG
-#define LEG
+#ifndef LEG_H
+#define LEG_H
 
-class leg {
+#include <stdint.h>
+#include <Adafruit_PWMServoDriver.h>
+
+
+class LEG {
     private:
-        int SHOULDER_ADDRESS, ELBOW_ADDRESS, WRIST_ADRESS;
-        
-    public:
-        int SHOULDER_ANGLE, ELBOW_ANGLE, WRIST_ANGLE;
-        int* GET_ANGLES();
-        void SET_ANGLES(int SHOULDER_ANGLE, int ELBOWP_ANGLE, int WRIST_ANGLE);
-        void MOVE_IK(int x, int y, int z);       
-};
+        uint8_t SHOULDER_CHANNEL, ELBOW_CHANNEL, WRIST_CHANNEL;
+        uint8_t SHOULDER_ANGLE, ELBOW_ANGLE, WRIST_ANGLE;
+        uint8_t DRIVER_ADDRESS;
+        Adafruit_PWMServoDriver DRIVER;
 
+    public:
+        LEG(uint8_t SHOULDER_CHANNEL, uint8_t ELBOW_CHANNEL, uint8_t WRIST_CHANNEL, uint8_t DRIVER_ADDRESS);
+
+        uint32_t GET_ANGLES();
+        bool SET_ANGLES(uint8_t SHOULDER_ANGLE, uint8_t ELBOW_ANGLE, uint8_t WRIST_ANGLE);
+        void MOVE_IK(float x, float y, float z);
+};
 
 #endif
