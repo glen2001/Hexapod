@@ -13,6 +13,8 @@ LEG::LEG(uint8_t SHOULDER_CHANNEL, uint8_t ELBOW_CHANNEL, uint8_t WRIST_CHANNEL,
         DRIVER.begin();
 }
 
+LEG::~LEG() {}
+
 uint32_t LEG::GET_ANGLES() {
     // Packs angle values into one uint32_t
 
@@ -20,6 +22,8 @@ uint32_t LEG::GET_ANGLES() {
 }
 
 bool LEG::SET_ANGLES(uint8_t SHOULDER_ANGLE, uint8_t ELBOW_ANGLE, uint8_t WRIST_ANGLE) {
+    //Checks if input angle is in acceptable range
+
     if (SHOULDER_ANGLE < 0 || SHOULDER_ANGLE > 180 ||
     ELBOW_ANGLE < 0 || ELBOW_ANGLE > 180 ||
     WRIST_ANGLE < 0 || WRIST_ANGLE > 180) {

@@ -14,6 +14,7 @@ class LEG {
 
     public:
         LEG(uint8_t SHOULDER_CHANNEL, uint8_t ELBOW_CHANNEL, uint8_t WRIST_CHANNEL, uint8_t DRIVER_ADDRESS);
+        ~LEG();
 
         uint32_t GET_ANGLES();
         bool SET_ANGLES(uint8_t SHOULDER_ANGLE, uint8_t ELBOW_ANGLE, uint8_t WRIST_ANGLE);
