@@ -9,6 +9,12 @@ class LEG {
     private:
         uint8_t SHOULDER_CHANNEL, ELBOW_CHANNEL, WRIST_CHANNEL;
         uint8_t SHOULDER_ANGLE, ELBOW_ANGLE, WRIST_ANGLE;
+        const float SHOULDER_LENGTH = 50.5;   // mm
+        const float ELBOW_LENGTH = 50.5;      // mm
+        const float WRIST_LENGTH = 92.2;      // mm
+
+        const int PULSE_MIN = 500;
+        const int PULSE_MAX = 2500;
         Adafruit_PWMServoDriver& DRIVER;
 
     public:

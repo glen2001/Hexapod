@@ -38,9 +38,6 @@ bool LEG::SET_ANGLES(uint8_t SHOULDER_ANGLE, uint8_t ELBOW_ANGLE, uint8_t WRIST_
     this->ELBOW_ANGLE = ELBOW_ANGLE;
     this->WRIST_ANGLE = WRIST_ANGLE;
 
-    const int PULSE_MIN = 500;
-    const int PULSE_MAX = 2500;
-
     DRIVER.writeMicroseconds(SHOULDER_CHANNEL, map(SHOULDER_ANGLE, 0, 180, PULSE_MIN, PULSE_MAX));
     DRIVER.writeMicroseconds(ELBOW_CHANNEL, map(ELBOW_ANGLE, 0, 180, PULSE_MIN, PULSE_MAX));
     DRIVER.writeMicroseconds(WRIST_CHANNEL, map(WRIST_ANGLE, 0, 180, PULSE_MIN, PULSE_MAX));
@@ -49,11 +46,34 @@ bool LEG::SET_ANGLES(uint8_t SHOULDER_ANGLE, uint8_t ELBOW_ANGLE, uint8_t WRIST_
 }
 
 bool LEG::MOVE_IK(float x, float y, float z) {
-    // Placeholder for IK calculations
+    // Calculate the azimuthal angle
 
-    uint8_t calculated_shoulder_angle = /* IK calculation */;
-    uint8_t calculated_elbow_angle = /* IK calculation */;
-    uint8_t calculated_wrist_angle = /* IK calculation */;
+    uint8_t shoulder_angle = atan2(y, x) * 180.0 / M_PI;
 
-    SET_ANGLES(calculated_shoulder_angle, calculated_elbow_angle, calculated_wrist_angle);
+    // Effective reach and total length
+
+    float r = sqrt(x * x + y * y);
+    float L = sqrt(r * r + z * z);
+
+    // Check if coordinate is out of reach
+
+    if (L > (SHOULDER_LENGTH + ELBOW_LENGTH + WRIST_LENGTH)) {
+        return false;
+    }
+
+    // Elbow angle calculation
+
+    float cos_elbow = (ELBOW_LENGTH * ELBOW_LENGTH + WRIST_LENGTH * WRIST_LENGTH - L * L) / (2 * ELBOW_LENGTH * WRIST_LENGTH);
+    uint8_t elbow_angle = 180 - acos(cos_elbow) * 180.0 / M_PI;
+
+    // Shoulder angle calculation
+
+    float shoulder_pitch = atan2(z, r) - asin((WRIST_LENGTH * sin(elbow_angle * M_PI / 180.0)) / L);
+    uint8_t shoulder_pitch_angle = shoulder_pitch * 180.0 / M_PI;
+
+    // Wrist angle calculation
+
+    uint8_t wrist_angle = 180 - (shoulder_pitch_angle + elbow_angle);
+
+    return SET_ANGLES(shoulder_pitch_angle, elbow_angle, wrist_angle);
 }
