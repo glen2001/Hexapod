@@ -1,6 +1,7 @@
 #include <HEXAPOD.h>
 #include <LEG.h>
 
+
 HEXAPOD::HEXAPOD() 
     : DRIVER_1(0x40), 
     DRIVER_2(0x41), 
@@ -16,9 +17,15 @@ HEXAPOD::HEXAPOD()
 
 HEXAPOD::~HEXAPOD() {}
 
-void HEXAPOD::INITIALIZE() {
-    DRIVER_1.begin();
-    DRIVER_2.begin();
+bool HEXAPOD::INITIALIZE() {
+    if (!DRIVER_1.begin()) {
+        Serial.println("Error initializing DRIVER_1");
+        return false;
+    }
+    if (!DRIVER_2.begin()) {
+        Serial.println("Error initializing DRIVER_2");
+        return false;
+    }
 
     DRIVER_1.setPWMFreq(50);
     DRIVER_2.setPWMFreq(50);
@@ -28,4 +35,15 @@ void HEXAPOD::INITIALIZE() {
     for (auto& LEG_ : LEGS) {
         LEG_.INITIALIZE();
     }
+
+    return true;
+}
+
+bool HEXAPOD::MOVE_LEG(uint8_t LEG_INDEX, float x, float y, float z) {
+    if (LEG_INDEX >= 6) {
+        Serial.println("Invalid leg index");
+        return false;
+    }
+    
+    return LEGS[LEG_INDEX].MOVE_IK(x, y, z);
 }

@@ -24,7 +24,7 @@ void LEG::INITIALIZE() {
 uint32_t LEG::GET_ANGLES() {
     // Packs angle values into one uint32_t
 
-    return (SHOULDER_ANGLE << 16) | (ELBOW_ANGLE << 8) | (WRIST_ANGLE);
+    return (static_cast<uint32_t>(SHOULDER_ANGLE) << 16) | (static_cast<uint32_t>(ELBOW_ANGLE) << 8) | static_cast<uint32_t>(WRIST_ANGLE);
 }
 
 bool LEG::SET_ANGLES(uint8_t SHOULDER_ANGLE, uint8_t ELBOW_ANGLE, uint8_t WRIST_ANGLE) {
@@ -46,34 +46,18 @@ bool LEG::SET_ANGLES(uint8_t SHOULDER_ANGLE, uint8_t ELBOW_ANGLE, uint8_t WRIST_
 }
 
 bool LEG::MOVE_IK(float x, float y, float z) {
-    // Calculate the azimuthal angle
+    //PLACEHOLDER FUCNTION -- IMPLIMENT LATER
 
-    uint8_t shoulder_angle = atan2(y, x) * 180.0 / M_PI;
+    // Checks if coordinate is accessible
 
-    // Effective reach and total length
-
-    float r = sqrt(x * x + y * y);
-    float L = sqrt(r * r + z * z);
-
-    // Check if coordinate is out of reach
-
-    if (L > (SHOULDER_LENGTH + ELBOW_LENGTH + WRIST_LENGTH)) {
+    float distance = sqrt(x * x + y * y + z * z); 
+    if (distance > (SHOULDER_LENGTH + ELBOW_LENGTH + WRIST_LENGTH)) {
         return false;
     }
 
-    // Elbow angle calculation
+    uint8_t CALCULATED_SHOULDER_ANGLE = /* calculations */;
+    uint8_t CALCULATED_ELBOW_ANGLE = /* calculations */;
+    uint8_t CALCULATED_WRIST_ANGLE = /* calculations */;
 
-    float cos_elbow = (ELBOW_LENGTH * ELBOW_LENGTH + WRIST_LENGTH * WRIST_LENGTH - L * L) / (2 * ELBOW_LENGTH * WRIST_LENGTH);
-    uint8_t elbow_angle = 180 - acos(cos_elbow) * 180.0 / M_PI;
-
-    // Shoulder angle calculation
-
-    float shoulder_pitch = atan2(z, r) - asin((WRIST_LENGTH * sin(elbow_angle * M_PI / 180.0)) / L);
-    uint8_t shoulder_pitch_angle = shoulder_pitch * 180.0 / M_PI;
-
-    // Wrist angle calculation
-
-    uint8_t wrist_angle = 180 - (shoulder_pitch_angle + elbow_angle);
-
-    return SET_ANGLES(shoulder_pitch_angle, elbow_angle, wrist_angle);
+    return SET_ANGLES(CALCULATED_SHOULDER_ANGLE, CALCULATED_ELBOW_ANGLE, CALCULATED_WRIST_ANGLE);
 }
