@@ -55,9 +55,9 @@ bool LEG::MOVE_IK(float x, float y, float z) {
         return false;
     }
 
-    uint8_t CALCULATED_SHOULDER_ANGLE = /* calculations */;
-    uint8_t CALCULATED_ELBOW_ANGLE = /* calculations */;
-    uint8_t CALCULATED_WRIST_ANGLE = /* calculations */;
+    uint8_t CALCULATED_SHOULDER_ANGLE; // CALCULATE LATER
+    uint8_t CALCULATED_ELBOW_ANGLE;
+    uint8_t CALCULATED_WRIST_ANGLE;
 
     return SET_ANGLES(CALCULATED_SHOULDER_ANGLE, CALCULATED_ELBOW_ANGLE, CALCULATED_WRIST_ANGLE);
 }
