@@ -1,5 +1,7 @@
 #include <HEXAPOD.h>
 #include <LEG.h>
+#include <ERROR_HANDLER.h>
+#include <SPI.h>
 
 
 HEXAPOD::HEXAPOD() 
@@ -18,12 +20,11 @@ HEXAPOD::HEXAPOD()
 HEXAPOD::~HEXAPOD() {}
 
 bool HEXAPOD::INITIALIZE() {
-    if (!DRIVER_1.begin()) {
-        Serial.println("Error initializing DRIVER_1");
+    if (!ERROR_HANDLER::CHECK_CONDITION(DRIVER_1.begin(), "Failed to initialize DRIVER_1", true)) {
         return false;
     }
-    if (!DRIVER_2.begin()) {
-        Serial.println("Error initializing DRIVER_2");
+
+    if (!ERROR_HANDLER::CHECK_CONDITION(DRIVER_2.begin(), "Failed to initialize DRIVER_2", true)) {
         return false;
     }
 

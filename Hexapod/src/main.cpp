@@ -1,16 +1,16 @@
 #include <Arduino.h>
 #include <Servo.h>
 #include <LEG.h>
-#include <SPI.h>
-
-Servo servo;
+#include <HEXAPOD.h>
+#include <ERROR_HANDLER.h>
 
 void setup() {
-    servo.attach(9);
-    servo.write(90);
+    Serial.begin(9600);
+
+    HEXAPOD HEXAPOD; 
+    HEXAPOD.INITIALIZE();
 }
 
 void loop() {
 
-    
 }

@@ -2,6 +2,7 @@
 #define HEXAPOD_H
 
 #include <LEG.h>
+#include <SPI.h>
 
 
 class HEXAPOD {
