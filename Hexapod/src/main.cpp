@@ -3,6 +3,7 @@
 #include <LEG.h>
 #include <HEXAPOD.h>
 #include <ERROR_HANDLER.h>
+#include <HELPER.h>
 
 enum HEXAPOD_STATUS {
     STARTUP,
@@ -15,10 +16,11 @@ HEXAPOD_STATUS STATE = STARTUP;
 HEXAPOD HEXAPOD_MAIN;
 
 void setup() {
-    delay(2000);
+    delay(5000);
     Wire.begin(10, 3);
     Serial.begin(9600);
      
+    PRINT_ESP_INFO();
     HEXAPOD_MAIN.INITIALIZE();
     STATE = IDLE;
 }

@@ -20,13 +20,7 @@ HEXAPOD::HEXAPOD()
 HEXAPOD::~HEXAPOD() {}
 
 bool HEXAPOD::INITIALIZE() {
-    Serial.println("== ESP32-C3 Info ==");
-
-    Serial.print("Chip Model: ");
-    Serial.println(ESP.getChipModel());
-
-    Serial.print("Chip ID (MAC): ");
-    Serial.println(ESP.getEfuseMac(), HEX);
+    Serial.println("Initializing PWM Drivers");
 
     if (!ERROR_HANDLER::CHECK_CONDITION(DRIVER_1.begin(), "Failed to initialize DRIVER_1", true)) {
         return false;
@@ -42,6 +36,7 @@ bool HEXAPOD::INITIALIZE() {
 
     
     Serial.println("Initialization Successful");
+    Serial.println();
 
     DRIVER_1.setPWMFreq(50);
     DRIVER_2.setPWMFreq(50);
