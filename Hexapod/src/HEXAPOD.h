@@ -16,7 +16,9 @@ class HEXAPOD {
         ~HEXAPOD();
 
         bool INITIALIZE();
-        bool MOVE_LEG(uint8_t leg_index, float x, float y, float z);
+        bool MOVE_LEG(uint8_t LEG_INDEX, float x, float y, float z);
+        bool SET_LEG_ANGLES(uint8_t LEG_INDEX, uint8_t SHOULDER, uint8_t ELBOW, uint8_t WRIST);
+        uint8_t GET_LEG_ANGLES(uint8_t LEG_INDEX);
 };
 
 #endif

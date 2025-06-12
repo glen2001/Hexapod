@@ -1,17 +1,39 @@
 #include <Arduino.h>
+#include <Wire.h>
 #include <LEG.h>
 #include <HEXAPOD.h>
 #include <ERROR_HANDLER.h>
-#include <Wire.h>
+
+enum HEXAPOD_STATUS {
+    STARTUP,
+    IDLE,
+    RUNNING,
+    ABORT
+};
+
+HEXAPOD_STATUS STATE = STARTUP;
+HEXAPOD HEXAPOD_MAIN;
 
 void setup() {
-    Wire.begin(45, 48);
+    delay(2000);
+    Wire.begin(10, 3);
     Serial.begin(115200);
-
-    HEXAPOD HEXAPOD; 
-    HEXAPOD.INITIALIZE();
+     
+    HEXAPOD_MAIN.INITIALIZE();
+    STATE = RUNNING;
 }
 
 void loop() {
-    Serial.println("Hello World!");
+    switch(STATE) {
+        case IDLE:
+            // HEXAPOD_MAIN.IDLE();
+            Serial.println("STATE: IDLE");
+        case RUNNING:
+            // HEXAPOD_MAIN.RUNNING();
+            Serial.println("STATE: RUNNING");
+        case ABORT:
+            // HEXAPOD_MAIN.ABORT();
+            Serial.println("STATE: ABORT");
+    }
+    
 }
