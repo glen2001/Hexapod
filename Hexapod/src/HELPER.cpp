@@ -1,7 +1,7 @@
 #include <Arduino.h>
 
 void PRINT_ESP_INFO() {
-  Serial.println("== ESP32-C3 Info ==");
+  Serial.println("== ESP32 Info ==");
   Serial.println();
 
   Serial.print("Chip Model: ");
