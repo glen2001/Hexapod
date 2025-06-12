@@ -20,6 +20,14 @@ HEXAPOD::HEXAPOD()
 HEXAPOD::~HEXAPOD() {}
 
 bool HEXAPOD::INITIALIZE() {
+    Serial.println("== ESP32-C3 Info ==");
+
+    Serial.print("Chip Model: ");
+    Serial.println(ESP.getChipModel());
+
+    Serial.print("Chip ID (MAC): ");
+    Serial.println(ESP.getEfuseMac(), HEX);
+
     if (!ERROR_HANDLER::CHECK_CONDITION(DRIVER_1.begin(), "Failed to initialize DRIVER_1", true)) {
         return false;
     }

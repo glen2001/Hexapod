@@ -17,10 +17,10 @@ HEXAPOD HEXAPOD_MAIN;
 void setup() {
     delay(2000);
     Wire.begin(10, 3);
-    Serial.begin(115200);
+    Serial.begin(9600);
      
     HEXAPOD_MAIN.INITIALIZE();
-    STATE = RUNNING;
+    STATE = IDLE;
 }
 
 void loop() {
@@ -28,12 +28,16 @@ void loop() {
         case IDLE:
             // HEXAPOD_MAIN.IDLE();
             Serial.println("STATE: IDLE");
+            delay(5000);
+            break;
         case RUNNING:
             // HEXAPOD_MAIN.RUNNING();
             Serial.println("STATE: RUNNING");
+            break;
         case ABORT:
             // HEXAPOD_MAIN.ABORT();
             Serial.println("STATE: ABORT");
+            break;
     }
     
 }
